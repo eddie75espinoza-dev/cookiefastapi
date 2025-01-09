@@ -1,0 +1,23 @@
+{
+    "project_name": "fast_api_project",
+    "docker_image_backend": "{{ cookiecutter.project_name|replace('_','-') }}",
+    "app_name": "myapi",
+    "asgi_server": "uvicorn",
+    "python_version": ["3.13", "3.12", "3.10", "3.8", "3.6"],
+    "host": "0.0.0.0",
+    "port": "8000",
+    "secret_key": "change_this_password",
+    "backend_cors_origins": "http://localhost,http://localhost:{{ cookiecutter.port }}",
+    "postgres_user": "admin",
+    "postgres_password": "admin",
+    "postgres_host": "localhost",
+    "postgres_port": "5432",
+    "postgres_db": "",
+    "postgres_email": "admin@mail.com",
+    "smtp_server": "",
+    "smtp_user": "",
+    "smtp_password": "",
+    "smtp_tls": true,
+    "smtp_ssl": false,
+    "smtp_port": "587"
+}

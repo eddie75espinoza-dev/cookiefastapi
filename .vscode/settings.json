@@ -1,0 +1,22 @@
+// Workspace settings
+{
+    "files.exclude": {
+        "**/*.map": true,
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/.pytest_cache": true,
+    },
+    "python.analysis.typeCheckingMode": "off",  // Desactiva la comprobación de tipos estática en el código Python.
+    "python.testing.pytestArgs": [
+        "test"
+    ],                                          // Especifica el directorio o argumentos que Pytest usará para ejecutar las pruebas
+    "python.testing.unittestEnabled": false,    // Desactiva el soporte para el marco de pruebas unittest
+    "python.testing.pytestEnabled": true,       // Habilita el uso de Pytest como el marco de pruebas principal.
+    "[python]": {
+        "editor.formatOnSave": true,            // Habilita el formato automático del código al guardar archivos Python.
+        "editor.rulers": [88, 100],             // Agrega reglas visuales a la vista del editor en las columnas 88 y 100
+        "editor.detectIndentation": false,      // Desactiva la detección automática de configuración de indentación
+        "editor.insertSpaces": false,            // Configura el uso de espacios en lugar de tabulaciones.
+        "editor.tabSize": 4                     // Define que cada tabulación equivale a 4 espacios.
+    }
+}
