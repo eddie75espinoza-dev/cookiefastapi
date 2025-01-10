@@ -6,7 +6,7 @@
     "host": "0.0.0.0",
     "port": "8000",
     "base_url": "/services/{{cookiecutter.project_name}}",
-    "token_secret_key": "GENERATE_TOKEN_SECRET_KEY",
+    "token_secret_key": "uHDFfu2_RNfXBra9NjRLMWWoHRtcqag_1rZtMIyqJQo",
     "backend_cors_origins": "http://localhost,http://localhost:{{ cookiecutter.port }}",
     "postgres_user": "postgres",
     "postgres_password": "postgres",
