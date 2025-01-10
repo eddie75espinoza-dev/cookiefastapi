@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from core.middleware import require_bearer_token
+from sqlalchemy.sql import text
 from sqlalchemy.orm import Session
 
 from db.database import get_db
@@ -17,8 +18,8 @@ async def read_root_private():
 def test_connection(db: Session = Depends(get_db)):
     """Prueba de conexión a la base de datos"""
     try:
-        result = db.execute("SELECT 1")
-        return {"status": "success", "result": [row for row in result]}
+        db.execute(text("SELECT 1"))        
+        return {"status": "success"}
     
     except Exception as e:
-        return {"status": "error", "detail": str(e)}
+        return {"status": "error", "detail": str(e)}, 400
