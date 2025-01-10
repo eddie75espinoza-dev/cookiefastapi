@@ -2,7 +2,6 @@
     "project_name": "fastapi_project",
     "short_description_project": "This is a FastAPI project template generated with Cookiecutter.",
     "docker_image_backend": "{{ cookiecutter.project_name|replace('_','-') }}",
-    "app_name": "app",
     "python_version": ["3.13", "3.12", "3.11", "3.10", "3.8", "3.6"],
     "host": "0.0.0.0",
     "port": "8000",
