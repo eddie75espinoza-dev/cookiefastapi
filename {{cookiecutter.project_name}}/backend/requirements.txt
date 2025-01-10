@@ -5,6 +5,7 @@ python-dotenv
 click
 httpx
 psycopg2-binary
+PyJWT
 pydantic
 pydantic-settings
 pytest
