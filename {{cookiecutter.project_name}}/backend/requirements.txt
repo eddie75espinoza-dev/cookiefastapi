@@ -1,8 +1,12 @@
+anyio
 fastapi
 uvicorn[standard]
 python-dotenv
 click
 httpx
 psycopg2-binary
+pydantic
+pydantic-settings
 pytest
+pytest-asyncio
 SQLAlchemy
