@@ -1,12 +1,20 @@
 version: '3.8'
 
+networks:
+  {{ cookiecutter.project_name }}_net:
+    name: {{ cookiecutter.project_name }}_net
+    driver: bridge
+
 services:
   backend:
     build: ./backend
     container_name: {{ cookiecutter.project_name }}_backend
+    restart: always
     ports:
       - "{{cookiecutter.port}}:8000"
     env_file:
       - .env
     volumes:
-      - ./backend:/app
+      - ./backend:/backend
+    networks:
+      - {{ cookiecutter.project_name }}_net
