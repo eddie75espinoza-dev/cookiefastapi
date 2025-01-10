@@ -1,0 +1,28 @@
+{
+    "backend": {
+        "routers": {
+            "routes.py": "..."
+        },
+        "core": {
+            "config.py": "...",
+            "security.py": "..."
+        },
+        "db": {
+            "database.py": "..."
+        },
+        "models": {
+            "__init__.py": "..."
+        },
+        "schemas": {
+            "__init__.py": "..."
+        },
+        "tests": {
+            "test_main.py": "..."
+        },
+        "Dockerfile": "# Dockerfile\nFROM python:{{ cookiecutter.python_version }}-slim\n\nWORKDIR /app\n\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\n\nCOPY . .\n\nCMD [\"uvicorn\", \"app:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]",
+        "app.py": "from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/\")\ndef read_root():\n    return {\"message\": \"Hello, World!\"} ",
+        "requirements.txt": "fastapi\nuvicorn[standard]\npython-dotenv\nclick\nhttpx\npsycopg2-binary\npytest\nSQLAlchemy"
+    },
+    "docker-compose.yml": "version: '3.8'\n\nservices:\n  backend:\n    build: ./backend\n    container_name: {{ cookiecutter.project_name }}_backend\n    ports:\n      - \"{{cookiecutter.port}}:8000\"\n    env_file:\n      - .env\n    volumes:\n      - ./backend:/app",
+    "README.md": "# {{cookiecutter.project_name}}\n\nThis is a cookiecutter template for creating a FastAPI project with Docker and PostgreSQL."
+}
