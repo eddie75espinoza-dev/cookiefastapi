@@ -65,5 +65,5 @@ docker-compose down -v
 Para verificar el correcto funcionamiento del servicio web, ejecute el siguiente comando en la terminal mientras el contenedor Docker esté activo:
 
 ```bash
-docker exec -it <nombre_contenedor> pytest
+docker exec -it {{cookiecutter.docker_image_backend}} pytest
 ```

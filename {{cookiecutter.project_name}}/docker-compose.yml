@@ -7,8 +7,9 @@ networks:
 
 services:
   backend:
+    image: {{cookiecutter.docker_image_backend}}:latest
     build: ./backend
-    container_name: {{ cookiecutter.project_name }}_backend
+    container_name: {{cookiecutter.docker_image_backend}}
     restart: always
     ports:
       - "${PORT:-8000}:8000"
