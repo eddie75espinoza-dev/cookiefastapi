@@ -14,11 +14,5 @@
     "postgres_password": "postgres",
     "postgres_host": "localhost",
     "postgres_port": "5432",
-    "postgres_db": "{{ cookiecutter.project_name }}_db",
-    "smtp_server": "",
-    "smtp_user": "",
-    "smtp_password": "",
-    "smtp_tls": "True",
-    "smtp_ssl": "False",
-    "smtp_port": "587"
+    "postgres_db": "{{ cookiecutter.project_name }}_db"
 }
