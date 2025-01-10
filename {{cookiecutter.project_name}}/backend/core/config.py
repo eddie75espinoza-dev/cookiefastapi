@@ -1,3 +1,4 @@
+import os
 import secrets
 from typing import Annotated, Any, List
 
@@ -68,4 +69,4 @@ def get_config(environment: str) -> Config:
     return config_classes.get(environment, DevelopmentConfig)()
 
 
-APP_CONFIG = get_config(environment="development")  # Default to 'development'
+APP_CONFIG = get_config(environment=os.getenv('ENVIRONMENT'))
