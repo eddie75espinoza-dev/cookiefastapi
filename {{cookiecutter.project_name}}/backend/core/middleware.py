@@ -24,10 +24,10 @@ def require_bearer_token(request: Request):
         if decoded_token.get("sub") != APP_CONFIG.SUB:
             raise HTTPException(status_code=403, detail="Invalid token data")
 
-    except jwt.exceptions.ExpiredSignatureError:  # Cambiado a 'exceptions.ExpiredSignatureError'
+    except jwt.exceptions.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")
 
-    except jwt.exceptions.InvalidTokenError:  # Cambiado a 'exceptions.InvalidTokenError'
+    except jwt.exceptions.InvalidTokenError:
         raise HTTPException(status_code=403, detail="Invalid token")
 
     except Exception as exc:
