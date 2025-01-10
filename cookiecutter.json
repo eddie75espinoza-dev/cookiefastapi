@@ -13,11 +13,10 @@
     "postgres_host": "localhost",
     "postgres_port": "5432",
     "postgres_db": "",
-    "postgres_email": "admin@mail.com",
     "smtp_server": "",
     "smtp_user": "",
     "smtp_password": "",
-    "smtp_tls": true,
-    "smtp_ssl": false,
+    "smtp_tls": "True",
+    "smtp_ssl": "False",
     "smtp_port": "587"
 }
