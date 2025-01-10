@@ -1,71 +1,69 @@
-import os
 import secrets
-from dotenv import load_dotenv
-from typing import Annotated, Any
+from typing import Annotated, Any, List
 
-from pydantic import (
-    AnyUrl,
-    BeforeValidator,
-    computed_field
-)
+from pydantic import AnyUrl, Field, validator
 from pydantic_settings import BaseSettings
 
 
-load_dotenv()
-
-def parse_cors(v: Any) -> list[str] | str:
-    if isinstance(v, str) and not v.startswith("["):
-        return [i.strip() for i in v.split(",")]
-    elif isinstance(v, list | str):
-        return v
-    raise ValueError(v)
+def parse_cors(value: Any) -> List[str]:
+    if isinstance(value, str):
+        return [i.strip() for i in value.split(",")] if value else []
+    if isinstance(value, list):
+        return value
+    raise ValueError(f"Invalid CORS origins: {value}")
 
 
 class Config(BaseSettings):
-    SECRET_KEY = secrets.token_urlsafe(32)
-    HOST = os.getenv('HOST')
-    PORT = int(os.getenv('PORT'))
-    BASE_URL = os.getenv('BASE_URL')
-    API_V1_STR = "/api/v1"
+    SECRET_KEY: str = Field(default_factory=lambda: secrets.token_urlsafe(32))
+    HOST: str = Field(..., env="HOST")
+    PORT: int = Field(..., env="PORT")
+    BASE_URL: str | None = Field(None, env="BASE_URL")
+    API_V1_STR: str = "/api/v1"
 
-    SQLALCHEMY_DATABASE_URI = (
-        f'postgresql://{os.getenv("POSTGRES_USER")}:'
-        f'{os.getenv("POSTGRES_PASSWORD")}@'
-        f'{os.getenv("POSTGRES_HOST")}:{os.getenv("POSTGRES_PORT")}/'
-        f'{os.getenv("POSTGRES_DB")}'
-    )
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    POSTGRES_USER: str = Field(..., env="POSTGRES_USER")
+    POSTGRES_PASSWORD: str = Field(..., env="POSTGRES_PASSWORD")
+    POSTGRES_HOST: str = Field(..., env="POSTGRES_HOST")
+    POSTGRES_PORT: int = Field(..., env="POSTGRES_PORT")
+    POSTGRES_DB: str = Field(..., env="POSTGRES_DB")
 
     BACKEND_CORS_ORIGINS: Annotated[
-        list[AnyUrl] | str, BeforeValidator(parse_cors)
-    ] = []
+        List[AnyUrl], Field(default_factory=list)
+    ] = Field(default_factory=list, env="BACKEND_CORS_ORIGINS")
 
-    @computed_field  # type: ignore[prop-decorator]
+    @validator("BACKEND_CORS_ORIGINS", pre=True)
+    def validate_cors(cls, value: Any) -> List[str]:
+        return parse_cors(value)
+
     @property
-    def all_cors_origins(self) -> list[str]:
-        return [str(origin).rstrip("/") for origin in self.BACKEND_CORS_ORIGINS]
+    def SQLALCHEMY_DATABASE_URI(self) -> str:
+        return (
+            f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@"
+            f"{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        )
 
 
 class DevelopmentConfig(Config):
-    DEBUG = True
-    TESTING = True
+    DEBUG: bool = True
+    TESTING: bool = True
 
 
 class StagingConfig(Config):
-    DEBUG = False
-    TESTING = False
+    DEBUG: bool = False
+    TESTING: bool = False
 
 
 class ProductionConfig(Config):
-    DEBUG = False
-    TESTING = False
+    DEBUG: bool = False
+    TESTING: bool = False
 
 
-ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+def get_config(environment: str) -> Config:
+    config_classes = {
+        "development": DevelopmentConfig,
+        "staging": StagingConfig,
+        "production": ProductionConfig,
+    }
+    return config_classes.get(environment, DevelopmentConfig)()
 
-if ENVIRONMENT == 'development':
-    APP_CONFIG = 'config.DevelopmentConfig'
-elif ENVIRONMENT == 'production':
-    APP_CONFIG = 'config.ProductionConfig'
-elif ENVIRONMENT == 'staging':
-    APP_CONFIG = 'config.StagingConfig'
+
+APP_CONFIG = get_config(environment="development")  # Default to 'development'
