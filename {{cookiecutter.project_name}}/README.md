@@ -41,13 +41,6 @@ ENVIRONMENT=<'production', 'development', 'staging'>
 
 # RUTA BASE
 BASE_URL={{ cookiecutter.base_url }} # Para producción
-
-# Configuración del servidor SMTP
-SMTP_ID_SERVICE=<identificador_smtp_example>
-SMTP_SERVER=smtp-example.com
-SMTP_PORT=587 # TLS
-SMTP_USER=<smtp_user>
-SMTP_PASSWORD=<smtp_password>
 ```
 
 ### Construir y Levantar los Contenedores
@@ -68,3 +61,9 @@ docker-compose down -v
 
 
 ## Pruebas
+
+Para verificar el correcto funcionamiento del servicio web, ejecute el siguiente comando en la terminal mientras el contenedor Docker esté activo:
+
+```bash
+docker exec -it <nombre_contenedor> pytest
+```
