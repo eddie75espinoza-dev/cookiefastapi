@@ -41,11 +41,11 @@ PORT={{ cookiecutter.port }}
 BASE_URL={{ cookiecutter.base_url }} # Para producción
 
 # DB
-POSTGRES_USER={{cookiecutter.postgres_user}}
-POSTGRES_PASSWORD={{cookiecutter.postgres_password}}
-POSTGRES_HOST={{cookiecutter.postgres_host}}
-POSTGRES_PORT={{cookiecutter.postgres_port}}
-POSTGRES_DB={{cookiecutter.postgres_db}}
+POSTGRES_USER=<postgres_user>
+POSTGRES_PASSWORD=<postgres_password>
+POSTGRES_HOST=<postgres_host>
+POSTGRES_PORT=<postgres_port>
+POSTGRES_DB=<postgres_db>
 ```
 
 ### Construir y Levantar los Contenedores
