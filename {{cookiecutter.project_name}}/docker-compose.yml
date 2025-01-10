@@ -16,6 +16,25 @@ services:
     env_file:
       - .env
     volumes:
-      - ./backend:/backend
+      - ./backend-data:/backend
     networks:
       - {{ cookiecutter.project_name }}_net
+  
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+        - db-data-static:/var/lib/postgresql/data
+    ports:
+        - 0.0.0.0:${PORT:-5434}:5432
+    networks:
+      - {{ cookiecutter.project_name }}_net
+
+volumes:
+  db-data-static:
+  backend-data:
