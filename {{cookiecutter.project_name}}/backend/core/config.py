@@ -1,7 +1,7 @@
 import secrets
 from typing import Annotated, Any, List
 
-from pydantic import AnyUrl, Field, validator
+from pydantic import AnyUrl, Field, validator, BeforeValidator
 from pydantic_settings import BaseSettings
 
 
@@ -14,6 +14,8 @@ def parse_cors(value: Any) -> List[str]:
 
 
 class Config(BaseSettings):
+    ENVIRONMENT: str = Field(..., env="ENVIRONMENT")
+    PROJECT_NAME: str = Field(..., env="PROJECT_NAME")
     SECRET_KEY: str = Field(default_factory=lambda: secrets.token_urlsafe(32))
     HOST: str = Field(..., env="HOST")
     PORT: int = Field(..., env="PORT")
@@ -27,8 +29,8 @@ class Config(BaseSettings):
     POSTGRES_DB: str = Field(..., env="POSTGRES_DB")
 
     BACKEND_CORS_ORIGINS: Annotated[
-        List[AnyUrl], Field(default_factory=list)
-    ] = Field(default_factory=list, env="BACKEND_CORS_ORIGINS")
+        List[AnyUrl] | str, BeforeValidator(parse_cors)
+    ] = []
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
     def validate_cors(cls, value: Any) -> List[str]:
