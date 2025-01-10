@@ -7,7 +7,7 @@ networks:
 
 services:
   backend:
-    image: {{cookiecutter.docker_image_backend}}:latest
+    image: {{cookiecutter.docker_image_backend}}:${DOCKER_TAG:-latest}
     build: ./backend
     container_name: {{cookiecutter.docker_image_backend}}
     restart: always
