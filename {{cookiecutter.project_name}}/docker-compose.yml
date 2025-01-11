@@ -40,8 +40,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db-data-static:/var/lib/postgresql/data
-    ports:
-      - "0.0.0.0:${POSTGRES_PORT}:5432"
     networks:
       - {{ cookiecutter.project_name }}_net
 
