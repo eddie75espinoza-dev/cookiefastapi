@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from db.database import get_db
 
+
 router = APIRouter(tags=["private"], prefix="/private")
 
 
