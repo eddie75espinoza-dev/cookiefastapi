@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, JSONResponse
+from fastapi import APIRouter, Depends
+from fastapi.responses import JSONResponse
 from core.middleware import require_bearer_token
 
 
