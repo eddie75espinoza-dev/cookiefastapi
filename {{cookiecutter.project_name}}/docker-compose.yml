@@ -16,16 +16,16 @@ services:
     env_file:
       - .env
     volumes:
-      - ./backend-data:/backend
+      - ./backend:/backend
     depends_on:
       - postgres
     extra_hosts:
       - "host.docker.internal:host-gateway"
     command: >
-      bash -c "if [ '${ENVIRONMENT}' = 'production' ]; then \
-        uvicorn app:app --host ${HOST:-0.0.0.0} --port ${PORT:-8000} --workers 4; \
+      sh -c "if [ '${ENVIRONMENT}' = 'production' ]; then \
+        uvicorn app:app --host ${HOST} --port 8000 --workers 4; \
       else \
-        uvicorn app:app --host ${HOST:-0.0.0.0} --port ${PORT:-8000} --reload; \
+        uvicorn app:app --host ${HOST} --port 8000 --reload; \
       fi"
     networks:
       - {{ cookiecutter.project_name }}_net
@@ -41,10 +41,10 @@ services:
     volumes:
       - db-data-static:/var/lib/postgresql/data
     ports:
-      - "0.0.0.0:${POSTGRES_PORT:-5434}:5432"
+      - "0.0.0.0:${POSTGRES_PORT}:5432"
     networks:
       - {{ cookiecutter.project_name }}_net
 
 volumes:
   db-data-static:
-  backend-data:
+  backend:

@@ -13,7 +13,6 @@ WORKDIR /backend
 
 RUN apt-get update && apt-get install -y \
     postgresql-client \
-    wkhtmltopdf \
     libssl-dev \
     libxrender1 \
     libxext6 \
