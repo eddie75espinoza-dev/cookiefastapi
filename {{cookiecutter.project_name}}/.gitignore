@@ -7,6 +7,8 @@ htmlcov
 .cache
 .venv
 .env
+.env.dev
+.env.prod
 .pytest_cache/
 .vscode
 *.log
