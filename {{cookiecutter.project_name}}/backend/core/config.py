@@ -22,7 +22,7 @@ class Config(BaseSettings):
     PORT: int = Field(..., env="PORT")
     BASE_URL: str | None = Field(None, env="BASE_URL")
     API_V1_STR: str = "/api/v1"
-    TOKEN_SECRET_KEY: str = Field(..., env="TOKEN_SECRET_KEY")
+    TOKEN_SECRET_KEY: str = Field(default_factory=lambda: secrets.token_urlsafe(32))
     SUB: str = Field(..., env="SUB")
 
     POSTGRES_USER: str = Field(..., env="POSTGRES_USER")
