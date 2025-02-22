@@ -1,8 +1,8 @@
 version: '3.8'
 
 networks:
-  {{ cookiecutter.project_name }}_net:
-    name: {{ cookiecutter.project_name }}_net_dev
+  {{ cookiecutter.project_name }}-net-dev:
+    name: {{ cookiecutter.project_name }}-net-dev
     driver: bridge
 
 services:
@@ -24,11 +24,11 @@ services:
     command: >
       sh -c "uvicorn app:app --host ${HOST} --port 8000 --reload;"
     networks:
-      - {{ cookiecutter.project_name }}_net_dev
+      - {{ cookiecutter.project_name }}-net-dev
   
   postgres:
     image: postgres:latest
-    container_name: postgres_dev
+    container_name: postgres-dev
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -37,7 +37,7 @@ services:
     volumes:
       - db-data-static:/var/lib/postgresql/data
     networks:
-      - {{ cookiecutter.project_name }}_net_dev
+      - {{ cookiecutter.project_name }}-net-dev
 
 volumes:
   db-data-static:
